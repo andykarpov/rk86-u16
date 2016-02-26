@@ -32,16 +32,16 @@ module u16_rk86(
 	output	[1:0] SDRAM_BA,				//	SDRAM Bank Address 0
 	output			SDRAM_CLK,				//	SDRAM Clock
 
-	inout			PS2_KBD_CLK,
-	inout			PS2_KBD_DAT,
+	input			USB_NRESET,
+	input			USB_TX,
 
 	input				SD_SO,					//	SD Card Data 				(MISO)
 	output			SD_NCS,					//	SD Card Data 3 			(CSn)
 	output			SD_SI,					//	SD Card Command Signal	(MOSI)
 	output			SD_CLK,					//	SD Card Clock				(SCK)
 
-	output			DN,
-	output			DP,
+	output			AUDIO_OUT_L,
+	output			AUDIO_OUT_R,
 	
 	output			HDMI_D0,
 	output			HDMI_D1,
@@ -68,8 +68,8 @@ wire[5:0] VGA_G;
 wire[4:0] VGA_B;
 wire BEEP;
 
-assign DP = BEEP;
-assign DN = BEEP;
+assign AUDIO_OUT_L = BEEP;
+assign AUDIO_OUT_R = BEEP;
 
 ////////////////////   RESET   ////////////////////
 reg[3:0] reset_cnt;
@@ -216,7 +216,7 @@ wire[7:0] kbd_o;
 wire[2:0] kbd_shift;
 wire k_reset;
 
-rk_kbd kbd(.clk(clk50mhz), .reset(reset), .ps2_clk(PS2_KBD_CLK), .ps2_dat(PS2_KBD_DAT),
+rk_kbd kbd(.clk(clk50mhz), .reset(reset), .rx(USB_TX),
 	.addr(~ppa1_a), .odata(kbd_o), .shift(kbd_shift), .k_reset(k_reset));
 
 ////////////////////   SYS PPA   ////////////////////
