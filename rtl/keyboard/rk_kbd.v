@@ -28,7 +28,7 @@ module rk_kbd(
 
 reg[7:0] scancode;
 reg[2:0] shifts;
-reg kres;
+reg kres = 1'b0;
 assign shift = shifts[2:0];
 assign k_reset = kres;
 	
@@ -54,31 +54,8 @@ end
 reg[2:0] c;
 reg[3:0] r;
 
-always @(posedge clk or posedge reset) begin
-	if (reset) begin
-			keymatrix[0] <= 0;
-			keymatrix[1] <= 0;
-			keymatrix[2] <= 0;
-			keymatrix[3] <= 0;
-			keymatrix[4] <= 0;
-			keymatrix[5] <= 0;
-			keymatrix[6] <= 0;
-			keymatrix[7] <= 0;
-			shifts[2:0] <= 3'b0;
-	end else begin
-		case (scancode[7:0])
-		8'h02: 
-		begin
-			keymatrix[0] <= 0;
-			keymatrix[1] <= 0;
-			keymatrix[2] <= 0;
-			keymatrix[3] <= 0;
-			keymatrix[4] <= 0;
-			keymatrix[5] <= 0;
-			keymatrix[6] <= 0;
-			keymatrix[7] <= 0;
-			shifts[2:0] <= 3'b0;
-		end
+always @(*) begin	
+		case (scancode[7:0])		
 		//8'h": {c,r} = 7'h00; // 7 home
 		//8'h": {c,r} = 7'h10; // 9 pgup
 		//8'h": {c,r} = 7'h20; // esc
@@ -152,26 +129,7 @@ always @(posedge clk or posedge reset) begin
 		//8'h00: {c,r} = 7'h67; // \!
 		8'h2c: {c,r} = 7'h77; // space
 
-		8'he1: 
-		begin
-			{c,r} = 7'h08; // lshift
-			 shifts[0] = 1'b1;
-		 end
-		8'he5: 
-		begin
-			 {c,r} = 7'h08; // rshift
-			 shifts[0] = 1'b1;
-		 end
-		8'he4: 
-		begin
-			 {c,r} = 7'h18; // rctrl + lctrl
-			 shifts[1] = 1'b1;
-		 end
-		8'he2: shifts[2] = 1'b1;
-		8'he6: shifts[2] = 1'b1;
-		
-		8'h39: {c,r} = 7'h28; // caps
-		
+		8'h39: {c,r} = 7'h28; // caps		
 		8'h45: kres = 1'b1; // f12 (reset)
 		
 	/*	8'h0B: {c,r} = 7'h50; // F6
@@ -192,6 +150,30 @@ always @(posedge clk or posedge reset) begin
 				kres = 1'b0;
 			end
 	endcase
+end
+
+always @(posedge clk or posedge reset) begin
+	if (reset) begin
+		keymatrix[0] <= 0;
+		keymatrix[1] <= 0;
+		keymatrix[2] <= 0;
+		keymatrix[3] <= 0;
+		keymatrix[4] <= 0;
+		keymatrix[5] <= 0;
+		keymatrix[6] <= 0;
+		keymatrix[7] <= 0;
+		shifts[2:0] <= 3'b0;
+	end else begin
+		//if(r!=4'hF && scancode_ready) keymatrix[r][c] <= ~scancode[8];
+		case (scancode[7:0])
+			8'he1: shifts[0] = 1'b1; // lshift
+			8'he5: shifts[0] = 1'b1; // rshift
+			8'h18: shifts[1] = 1'b1; // rctrl + lctrl
+			8'he2: shifts[2] = 1'b1; // lalt
+			//default:
+			//	shifts[2:0] = 3'b0;
+		endcase
+		//end
 	end
 end
 

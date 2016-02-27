@@ -78,11 +78,14 @@ wire reset = ~reset_n;
 reg[3:0] KEY = {4'b1111}; // missed hw buttons on reverse-u16, all keys are pulled up
 
 always @(posedge clk50mhz) begin
-	if (KEY[0] && k_reset==1'b0 && clock_locked==1'b0 && reset_cnt==4'd14)
-		reset_n <= 1'b1;
-	else begin
+	if (KEY[0] == 1'b0 || k_reset == 1'b1 || reset_cnt != 4'd14)
+	begin
 		reset_n <= 1'b0;
-		reset_cnt <= reset_cnt+4'd1;
+		reset_cnt <= reset_cnt + 4'd1;
+	end
+	else
+	begin
+		reset_n <= 1'b1;
 	end
 end
 
