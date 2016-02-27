@@ -6,7 +6,7 @@ This project is a **Radio-86RK** port of the original Altera DE1 FPGA implementa
 
 ## Hardware part
 
-This port is designed to run on **ReVerSE-U16 Rev.C** board with Cyclone IV (EP4CE22E22C8).
+This port is designed to run on **ReVerSE-U16 Rev.A** or "ReVerSE-U16 Rev.C** board with Cyclone IV (EP4CE22E22C8).
 
 ## Software part
 
@@ -19,7 +19,7 @@ To run confifuration automatially when board powering on, you need to perform th
 
 ### SD card usage
 
-SD card should be formatted as _FAT16_ filesystem. Place _*.RK_ files anywhere on the SD card filesystem.
+SD card should be formatted as _FAT16_ filesystem. Place _*.RK_, _*.RKR_ or _*.GAM_ files anywhere on the SD card filesystem.
 Pressing "U" and enter will run the SD card interface.
 SD card interface is quiet simple, you just need to type "DIR" to get a list of files on SD card, "CD" to change directory and 
 then type a filename to run, then press "Enter".
