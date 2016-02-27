@@ -6,7 +6,7 @@ This project is a **Radio-86RK** port of the original Altera DE1 FPGA implementa
 
 ## Hardware part
 
-This port is designed to run on **ReVerSE-U16 Rev.A** or "ReVerSE-U16 Rev.C** board with Cyclone IV (EP4CE22E22C8).
+This port is designed to run on **ReVerSE-U16 Rev.A** or **ReVerSE-U16 Rev.C** board with Cyclone IV (EP4CE22E22C8).
 
 ## Software part
 
