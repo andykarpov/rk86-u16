@@ -2,7 +2,7 @@ module SDRAM_Controller(
 	input			clk50mhz,				//  Clock 50MHz
 	input			reset,					//  System reset
 	inout	[15:0]	DRAM_DQ,				//	SDRAM Data bus 16 Bits
-	output	reg[11:0]	DRAM_ADDR,			//	SDRAM Address bus 12 Bits
+	output	reg[12:0]	DRAM_ADDR,			//	SDRAM Address bus 12 Bits
 	output			DRAM_LDQM,				//	SDRAM Low-byte Data Mask 
 	output			DRAM_UDQM,				//	SDRAM High-byte Data Mask
 	output	reg		DRAM_WE_N,				//	SDRAM Write Enable
@@ -32,11 +32,11 @@ parameter ST_WRITE2 = 4'd10;
 parameter ST_REFRESH0 = 4'd11;
 parameter ST_REFRESH1 = 4'd12;
 
-reg[3:0] state;
+reg[3:0] state = ST_RESET0;
 reg[9:0] refreshcnt;
 reg[21:0] addr;
 reg[15:0] data;
-reg refreshflg,exrd,exwen;
+reg refreshflg,exrd = 0,exwen = 1'b1;
 
 assign DRAM_DQ = state == ST_WRITE0 ? data : 16'bZZZZZZZZZZZZZZZZ;
 assign DRAM_LDQM = 0;
@@ -47,8 +47,8 @@ assign DRAM_BA_1 = addr[21];
 
 always @(*) begin
 	case (state)
-	ST_RESET0: DRAM_ADDR = 12'b100000;
-	ST_RAS0:   DRAM_ADDR = addr[19:8];
+	ST_RESET0: DRAM_ADDR = 13'b100000;
+	ST_RAS0:   DRAM_ADDR = {1'b0,addr[19:8]};
 	default:   DRAM_ADDR = {4'b0100,addr[7:0]};
 	endcase
 	case (state)

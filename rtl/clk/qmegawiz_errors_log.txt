@@ -1,5 +1,0 @@
-
-
-/media/sf_Projects/Retrocomp/Reverse/reverse_u16/u16_rk86/rtl/clk/clk.v
-
-Feb 22 04PM:02:24>: File /media/sf_Projects/Retrocomp/Reverse/reverse_u16/u16_rk86/rtl/clk/clk.cnx could not be opened

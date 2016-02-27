@@ -22,9 +22,9 @@ module rk_video(
 	output hr_wg75,
 	output vr_wg75,
 	output cce,
-	output [4:0] r,
-	output [5:0] g,
-	output [4:0] b,
+	output r,
+	output g,
+	output b,
 	input[3:0] line,
 	input[6:0] ichar,
 	input vsp,
@@ -151,9 +151,9 @@ reg[1:0] line_state;
 reg[10:0] pixel_cnt;
 reg[10:0] line_cnt;
 
-assign r = data_out && inDisplay ? 5'b10000 : 5'b0;
-assign g = data_out && inDisplay ? 6'b100000 : 6'b0;
-assign b = data_out && inDisplay ? 5'b10000 : 5'b0;
+assign r = data_out && inDisplay;
+assign g = data_out && inDisplay;
+assign b = data_out && inDisplay;
 
 always @(posedge clk)
 begin

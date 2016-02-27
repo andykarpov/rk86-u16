@@ -15,7 +15,6 @@
 module soundcodec(
 	input	clk,
    input pulse,
-	input	reset_n,
    output o_pwm
 );
 
