@@ -34,13 +34,13 @@ then type a filename to run, then press "Enter".
 * ЗБ - BackSpace
 * ВК - Enter
 * ПС - Scroll
+* НЭ - Home
+* УС - Ctrl
+* CC - Shift
 * СТР - Delete
 * ТАБ - Tab
 * АР2 - Esc
 * Рус/Лат - Alt
-* НР - Shift
-* УС - Ctrl
-* CC - Shift
 
 ## Useful links
 
